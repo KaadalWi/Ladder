@@ -7,8 +7,8 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat" />
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-      <link rel="icon" href="/ladder_icon1.jpg" type="image/x-icon" />
-      <link rel="shortcut icon" href="/ladder_icon1.jpg" type="image/x-icon" />
+      <link rel="icon" href="/icons/ladder_icon.jpg" type="image/x-icon" />
+      <link rel="shortcut icon" href="/icons/ladder_icon.jpg" type="image/x-icon" />
       <style>
          body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
          .w3-row-padding img {margin-bottom: 12px}
@@ -19,38 +19,48 @@
          /* Remove margins from "page content" on small screens */
          @media only screen and (max-width: 600px) {#main {margin-left: 0}}
       </style>
+      <script type="text/javascript" src="/start/popups.js"></script>
+      <script type="text/javascript" src="/register/validation.js"></script>
    </head>
    <body class="w3-black">
 
       <!-- Icon Bar (Sidebar - hidden on small screens) -->
       <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
          <!-- Avatar image in top left corner -->
-         <img src="/ladder_icon1.jpg" style="width:100%">
-         <a href="" class="w3-bar-item w3-button w3-padding-large w3-black">
+         <img src="/icons/ladder_icon.jpg" style="width:100%">
+         <a href="/" class="w3-bar-item w3-button w3-padding-large w3-black">
             <i class="fa fa-home w3-xxlarge"></i>
             <p>HOME</p>
          </a>
-         <a href="/login.php" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a class="w3-bar-item w3-button w3-padding-large w3-hover-black"
+            onclick="openPopup('login_popup');">
             <i class="fa fa-user w3-xxlarge"></i>
             <p>LOGIN</p>
          </a>
-         <a href="/register.php" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a class="w3-bar-item w3-button w3-padding-large w3-hover-black"
+            onclick="openPopup('register_popup');">
             <i class="fa fa-book w3-xxlarge"></i>
             <p>REGISTER</p>
          </a>
-         <a href="/unregister.php" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
-            <i class="fa fa-window-close w3-xxlarge"></i>
-            <p>UNREGISTER</p>
+         <a href="#about" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+            <i class="fa fa-question w3-xxlarge"></i>
+            <p>ABOUT</p>
          </a>
       </nav>
 
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <div class="w3-bar w3-black w3-opacity w3-hover-opacity-off w3-center w3-small">
-            <a href="" class="w3-bar-item w3-button" style="width:20% !important">HOME</a>
-            <a href="/login.php" class="w3-bar-item w3-button" style="width:20% !important">LOGIN</a>
-            <a href="/register.php" class="w3-bar-item w3-button" style="width:25% !important">REGISTER</a>
-            <a href="/unregister.php" class="w3-bar-item w3-button" style="width:35% !important">UNREGISTER</a>
+            <a href="/" class="w3-bar-item w3-button" style="width:25% !important">HOME</a>
+            <a class="w3-bar-item w3-button" style="width:25% !important"
+               onclick="openPopup('login_popup');">
+               LOGIN
+            </a>
+            <a class="w3-bar-item w3-button" style="width:28% !important"
+               onclick="openPopup('register_popup');">
+               REGISTER
+            </a>
+            <a href="#about" class="w3-bar-item w3-button" style="width:22% !important">ABOUT</a>
          </div>
       </div>
 
@@ -60,7 +70,7 @@
          <header class="w3-container w3-padding-32 w3-center w3-black" id="home">
             <h1 class="w3-jumbo"><span class="w3-xxlarge">The <br /></span>Ladder</h1>
             <p>Veni. Vidi. Vici.</p>
-            <img src="/ladder_icon1.jpg" class="w3-image" width="992" height="1108">
+            <img src="/icons/ladder_icon.jpg" class="w3-image" width="992" height="1108">
          </header>
 
          <!-- Game -->
@@ -75,7 +85,8 @@
                </p>
             </div><br />
             <h2 class="w3-text-light-grey">Do you have what it takes?</h2>
-            <a href="/login.php" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+            <a class="w3-bar-item w3-button w3-padding-large w3-hover-black"
+               onclick="openPopup('login_popup');">
                <button class="w3-button w3-light-grey w3-padding-large w3-section">
                   <i class="fa fa-play"></i> Play Now
                </button>
@@ -101,12 +112,135 @@
             </div>
          </div>
 
+         <!-- Login -->
+         <div id="login_popup" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-dark-grey" style="max-width:600px">
+               <div class="w3-center"><br />
+                  <span onclick="closePopup('login_popup');"
+                     class="w3-button w3-xlarge w3-hover-black w3-display-topright" title="Close">
+                     &times;
+                  </span>
+               </div>
+               <form class="w3-container" id="login" name="login"
+                  action="http://dhansen.cs.georgefox.edu/~dhansen/echoForm.php" method="post">
+                  <h3 class="w3-xlarge w3-center w3-text-light-grey">Login</h3>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="text"
+                        name="username" id="username_login" placeholder="  Username"
+                        required maxlength="80" onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="password"
+                        name="password" id="password_login" placeholder="  Password" required
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p class="w3-large">
+                     <button class="w3-button w3-block w3-grey w3-hover-black w3-padding-large" type="submit"
+                        onclick="validateSubmission('login');">
+                        <i class="fa fa-arrow-right"></i> LOGIN
+                     </button>
+                  </p>
+                  <p class="w3-large w3-center w3-text-light-grey">
+                     <label>Don't have an account?</label><br />
+                     <button class="w3-button w3-grey w3-hover-black w3-padding-large"
+                        onclick="closePopup('login_popup'); openPopup('register_popup');">
+                        <i class="fa fa-book"></i> REGISTER
+                     </button>
+                  </p>
+               </form>
+               <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                  <button onclick="closePopup('login_popup');" type="button"
+                     class="w3-button w3-dark-grey w3-hover-black">
+                     Cancel
+                  </button>
+               </div>
+            </div>
+         </div>
+
+         <!-- Register -->
+         <div id="register_popup" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-dark-grey" style="max-width:600px">
+               <div class="w3-center"><br />
+                  <span onclick="closePopup('register_popup');"
+                     class="w3-button w3-xlarge w3-hover-black w3-display-topright" title="Close">
+                     &times;
+                  </span>
+               </div>
+               <form class="w3-container" id="register" name="register"
+                  action="http://dhansen.cs.georgefox.edu/~dhansen/echoForm.php" method="post">
+                  <h3 class="w3-xlarge w3-center w3-text-light-grey">Register</h3>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="text"
+                        name="name" id="name" placeholder="* Name" required maxlength="80"
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="email"
+                        name="email" id="email" placeholder="* Email (e.g. person@email.com)" required
+                        pattern="^\w+([\.\-!#$%&'*+/=?^`{|}~]?\w+)*@\w+([\.\-]?\w+)*(\.\w{2,3})+$"
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="text"
+                        name="username" id="username_register" placeholder="* Username (no spaces or capitals)"
+                        required maxlength="80" pattern="^[^A-Z\s]+$" onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="tel"
+                        name="phone" id="phone" placeholder="  Phone Number (e.g. XXX-XXX-XXXX)"
+                        pattern="^(\+?1)?[ ]?\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$"
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="password"
+                        name="password" id="password_register" placeholder="* Password" required
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p>
+                     <input class="w3-input w3-padding-16 w3-round-large" type="password"
+                        id="password_confirm" placeholder="* Confirm Password" required
+                        onchange="validateElement(this);" />
+                  </p>
+                  <p class="w3-text-light-grey">* Required fields</p>
+                  <p class="w3-large">
+                     <button class="w3-button w3-block w3-grey w3-hover-black w3-padding-large" type="submit"
+                        onclick="validateSubmission('register');">
+                        <i class="fa fa-book"></i> REGISTER
+                     </button>
+                  </p>
+                  <p class="w3-large w3-center w3-text-light-grey">
+                     <label>Already have an account?</label><br />
+                     <button class="w3-button w3-grey w3-hover-black w3-padding-large"
+                        onclick="closePopup('register_popup'); openPopup('login_popup');">
+                        <i class="fa fa-arrow-right"></i> LOGIN
+                     </button>
+                  </p>
+               </form>
+               <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                  <button onclick="closePopup('register_popup');" type="button"
+                     class="w3-button w3-dark-grey w3-hover-black">
+                     Cancel
+                  </button>
+               </div>
+            </div>
+         </div>
+
          <!-- Footer -->
          <footer class="w3-content w3-padding-64 w3-text-light-grey w3-center w3-xlarge">
-            <p class="w3-medium"><a href="mailto:kwilcox15@georgefox.edu" target="_blank" class="w3-hover-text-green">Contact us</a></p>
-            <p class="w3-medium">Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+            <p class="w3-medium">
+               <a href="mailto:kwilcox15@georgefox.edu" target="_blank" class="w3-hover-text-green">Contact us</a>
+            </p>
+            <p class="w3-medium">
+               Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a>
+            </p>
          <!-- End footer -->
          </footer>
+
+         <script type="text/javascript">
+            <!--
+            passwordRegisterValidation();
+            // -->
+         </script>
       <!-- END PAGE CONTENT -->
       </div>
    </body>
