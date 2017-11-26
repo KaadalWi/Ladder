@@ -29,6 +29,7 @@
       if (sha1($_POST["password"]) == $player["password"])
       { // Success!
          // Clean out any old session
+         session_start();
          session_unset();
          session_destroy();
          // Start a new session and remember the username (and more?)
