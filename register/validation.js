@@ -1,3 +1,4 @@
+// Validates all the elements of the given form
 function validateSubmission(formId)
 {
    var currentForm = document.getElementById(formId);
@@ -8,23 +9,28 @@ function validateSubmission(formId)
    }
 }
 
+// Validates the given form element
 function validateElement(formElement)
 {
+   // If the form element is invalid, set its background colour to indicate error
    if (!formElement.checkValidity())
    {
       formElement.style.backgroundColor = "#DF7F7F";
    }
+   // Else if valid, set its background colour to default
    else
    {
       formElement.style.backgroundColor = "";
    }
 }
 
+// Sets up password validation for registration
 function passwordRegisterValidation()
 {
    var password = document.getElementById("password_register");
    var passwordConfirm = document.getElementById("password_confirm");
 
+   // Compares password to passwordConfirm on validation of password
    password.addEventListener("input", function (event)
       {
          if (password.value != "" && passwordConfirm.value != password.value)
@@ -40,6 +46,7 @@ function passwordRegisterValidation()
       }
    );
 
+   // Compares password to passwordConfirm on validation of passwordConfirm
    passwordConfirm.addEventListener("input", function (event)
       {
          if (password.value != "" && passwordConfirm.value != password.value)
