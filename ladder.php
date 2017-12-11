@@ -123,7 +123,7 @@
          <div class="w3-content w3-center w3-text-grey w3-padding-64" id="ladder">
             <h2 class="w3-text-light-grey">
                Welcome to the Ladder,
-               <?php echo $_SESSION['user']->name; ?>
+               <?php echo htmlspecialchars($_SESSION['user']->name); ?>
             </h2>
             <div class="w3-large w3-justified">
                <!--<p>
@@ -153,16 +153,17 @@
                         echo "
                   <tr class='$rowColour'>" . PHP_EOL;
                         echo '
-                     <td>' . $resultRow['rank'] . '</td>' . PHP_EOL;
+                     <td>' . htmlspecialchars($resultRow['rank']) . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . $resultRow['name'] . PHP_EOL;
+                     <td>' . htmlspecialchars($resultRow['name']) . PHP_EOL;
                         if ($challengeable[$resultRow['username']])
                         {
                            echo '
                         <br />
                         <button class="w3-button w3-tiny w3-light-grey w3-padding-small"
                            onclick="openPopup(\'challenge_popup\', \''
-                              . $challengeable[$resultRow['username']] . '\', \'' . $resultRow['username'] . '\')">
+                              . htmlspecialchars($challengeable[$resultRow['username']]) . '\', \''
+                              . htmlspecialchars($resultRow['username']) . '\')">
                            Challenge
                         </button>
                      </td>' . PHP_EOL;

@@ -25,7 +25,8 @@
       $currentTime = date("Y-m-d H:i:s");
 
       // Execute the query
-      $query->execute(array(":challenger"=>$_SESSION["user"]->username, ":challengee"=>$_POST["challengee_username"], 
+      $query->execute(array(":challenger"=>$_SESSION["user"]->username,
+         ":challengee"=>htmlspecialchars_decode($_POST["challengee_username"]), 
          ":issued"=>$currentTime, ":scheduled"=>$_POST["match_time"]));
 
       // Check the results - should be one row
@@ -36,7 +37,7 @@
          echo '
             <script type="text/javascript">
                <!--
-               alert("Challenge failed.' . $_SESSION["user"]->username . $_POST["challengee_username"] . $currentTime . $_POST["match_time"] . '");
+               alert("Challenge failed.");
                window.history.back();
                // -->
             </script>';
