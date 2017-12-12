@@ -20,7 +20,7 @@
       $ladderStats->execute();
       $challenging = $db->prepare("
          select * from potential_challengees_view
-            where username = :username");
+            where username = :username;");
       $challenging->execute(array(":username"=>$_SESSION['user']->username));
       $challengeable = array();
 
@@ -72,11 +72,11 @@
       <!-- Icon Bar (Sidebar - hidden on small screens) -->
       <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
          <!-- Avatar image in top left corner -->
-         <a href="/ladder.php" class="w3-bar-item w3-button w3-padding-large w3-black">
+         <a href="/ladder.php#ladder" class="w3-bar-item w3-button w3-padding-large w3-black">
             <img src="/icons/ladder_icon.jpg" style="width:100%">
             <p>LADDER</p>
          </a>
-         <a class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a href="/challenges.php#challenges" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CHALLENGES</p>
          </a>
@@ -101,8 +101,8 @@
       <!-- Navbar on small screens (Hidden on medium and large screens) -->
       <div class="w3-top w3-hide-large w3-hide-medium" id="myNavbar">
          <div class="w3-bar w3-black w3-opacity w3-center w3-small">
-            <a href="/ladder.php" class="w3-bar-item w3-button w3-grey" style="width:16.5% !important">HOME</a>
-            <a class="w3-bar-item w3-button" style="width:15% !important">CHAL</a>
+            <a href="/ladder.php#ladder" class="w3-bar-item w3-button w3-grey" style="width:16.5% !important">HOME</a>
+            <a href="/challenges.php#challenges" class="w3-bar-item w3-button" style="width:15% !important">CHAL</a>
             <a class="w3-bar-item w3-button" style="width:16% !important">GAME</a>
             <a class="w3-bar-item w3-button" style="width:18.5% !important">MATCH</a>
             <a class="w3-bar-item w3-button" style="width:15% !important">ACCT</a>
@@ -126,16 +126,9 @@
                <?php echo htmlspecialchars($_SESSION['user']->name); ?>
             </h2>
             <div class="w3-large w3-justified">
-               <!--<p>
-                  Challenge other players.<br />
-                  Play intense matches.<br />
-                  Rise through the ranks of heroes.<br />
-                  Reach the Ladder's peak.
-               </p>-->
                <table class="w3-table-all w3-centered w3-responsive w3-hoverable">
                   <tr class="w3-black">
                      <th>Rank</th>
-                     <!--<th>&nbsp;</th>-->
                      <th>Name</th>
                      <th>Match Win Ratio</th>
                      <th>Game Win Ratio</th>
@@ -175,17 +168,23 @@
                      </td>' . PHP_EOL;
                         }
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['match_win_percentage']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['match_win_percentage']))
+                           . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['game_win_percentage']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['game_win_percentage']))
+                           . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['average_win_margin']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['average_win_margin']))
+                           . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['match_loss_percentage']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['match_loss_percentage']))
+                           . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['game_loss_percentage']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['game_loss_percentage']))
+                           . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . sprintf("%.2f", $resultRow['average_loss_margin']) . '</td>' . PHP_EOL;
+                     <td>' . sprintf("%.2f", htmlspecialchars($resultRow['average_loss_margin']))
+                           . '</td>' . PHP_EOL;
                         echo '
                   </tr>' . PHP_EOL;
                         $row++;

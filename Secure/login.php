@@ -6,7 +6,7 @@
 
    try
    {
-      $query = $db->prepare("select * from player where username = :username");
+      $query = $db->prepare("select * from player where username = :username;");
       $query->execute(array(":username"=>$_POST["username"]));
    }
    catch (PDOException $e)

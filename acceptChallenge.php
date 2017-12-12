@@ -16,24 +16,33 @@
 
    try
    {
-      // Prepare an insert query
-      $query = $db->prepare("
-         insert into challenge
-            (challenger, challengee, issued, scheduled) 
-         values (:challenger, :challengee, :issued, :scheduled);");
+      // Prepare an update query
+      $accept = $db->prepare("
+         update challenge
+         set accepted = :accepted
+         where challenger = :challenger and challengee = :challengee and scheduled = :scheduled;");
+      $remove = $db->prepare("
+         delete from challenge
+         where (challenger = :challengee or challengee = :challengee)
+            and not (challenger = :challenger and challengee = challengee and scheduled = :scheduled);");
 
       $currentTime = date("Y-m-d H:i:s");
 
       // Execute the query
-      $query->execute(array(":challenger"=>$_SESSION["user"]->username,
-         ":challengee"=>htmlspecialchars_decode($_POST["challengee_username"]), 
-         ":issued"=>$currentTime, ":scheduled"=>htmlspecialchars_decode($_POST["match_time"])));
+      $db->beginTransaction();
+      $accept->execute(array(":challengee"=>$_SESSION["user"]->username,
+         ":challenger"=>htmlspecialchars_decode($_POST["challenger"]), 
+         ":accepted"=>$currentTime, ":scheduled"=>htmlspecialchars_decode($_POST["scheduled"])));
+      $remove->execute(array(":challengee"=>$_SESSION["user"]->username,
+         ":challenger"=>htmlspecialchars_decode($_POST["challenger"]),
+         ":scheduled"=>htmlspecialchars_decode($_POST["scheduled"])));
 
       // Check the results - should be one row
-      if ($query->rowCount() != 1)
+      if ($accept->rowCount() != 1)
       {
          // Can check the status to see if we violated the unique
          // constraint on username and alert the user
+         $db->rollBack();
          echo '
             <script type="text/javascript">
                <!--
@@ -41,12 +50,13 @@
                window.history.back();
                // -->
             </script>';
-         $query->closeCursor();
+         $accept->closeCursor();
          die();
       }
    }
    catch (PDOException $e)
    {
+      $db->rollBack();
       echo '
          <script type="text/javascript">
             <!--
@@ -54,12 +64,13 @@
             window.history.back();
             // -->
          </script>';
-      $query->closeCursor();
+      $accept->closeCursor();
       $db->close();
       die();
    }
 
-   $query->closeCursor();
+   $db->commit();
+   $accept->closeCursor();
    
    // Success - send them somewhere! 
    echo '
