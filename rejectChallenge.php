@@ -16,29 +16,19 @@
 
    try
    {
-      // Prepare an update query
-      $accept = $db->prepare("
-         update challenge
-         set accepted = :accepted
-         where challenger = :challenger and challengee = :challengee and scheduled = :scheduled;");
+      // Prepare an delete query
       $remove = $db->prepare("
          delete from challenge
-         where (challenger = :challengee or challengee = :challengee)
-            and not (challenger = :challenger and challengee = :challengee and scheduled = :scheduled);");
-
-      $currentTime = date("Y-m-d H:i:s");
+         where challenger = :challenger and challengee = :challengee and scheduled = :scheduled;");
 
       // Execute the query
       $db->beginTransaction();
-      $accept->execute(array(":challengee"=>$_SESSION["user"]->username,
-         ":challenger"=>htmlspecialchars_decode($_POST["challenger"]), 
-         ":accepted"=>$currentTime, ":scheduled"=>htmlspecialchars_decode($_POST["scheduled"])));
       $remove->execute(array(":challengee"=>$_SESSION["user"]->username,
          ":challenger"=>htmlspecialchars_decode($_POST["challenger"]),
          ":scheduled"=>htmlspecialchars_decode($_POST["scheduled"])));
 
       // Check the results - should be one row
-      if ($accept->rowCount() != 1)
+      if ($remove->rowCount() != 1)
       {
          // Can check the status to see if we violated the unique
          // constraint on username and alert the user
@@ -46,7 +36,7 @@
          echo '
             <script type="text/javascript">
                <!--
-               alert("Accept failed.");
+               alert("Reject failed.");
                window.history.back();
                // -->
             </script>';
@@ -60,7 +50,7 @@
       echo '
          <script type="text/javascript">
             <!--
-            alert("FATAL ERROR: Accept failed. Please try again.");
+            alert("FATAL ERROR: Reject failed. Please try again.");
             window.history.back();
             // -->
          </script>';
@@ -70,7 +60,6 @@
    }
 
    $db->commit();
-   $accept->closeCursor();
    $remove->closeCursor();
    
    // Success - send them somewhere! 
