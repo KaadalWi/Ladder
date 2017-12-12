@@ -13,42 +13,6 @@
       die();
    }
    require("dbConnection.php");
-
-   try
-   {
-      $challengesReceived = $db->prepare("
-         select * from challenge
-            join player on challenger = username
-            where challengee = :challengee and accepted isnull;");
-      $challengesReceived->execute(array(":challengee"=>$_SESSION['user']->username));
-      $challengesSent = $db->prepare("
-         select * from challenge
-            join player on challengee = username
-            where challenger = :challenger and accepted isnull;");
-      $challengesSent->execute(array(":challenger"=>$_SESSION['user']->username));
-      $challengeAccepted = $db->prepare("
-         select challenger, challengee, issued, accepted, scheduled,
-            p1.username as challenger_username, p1.name as challenger_name,
-            p2.username as challengee_username, p2.name as challengee_name
-            from challenge
-            join player as p1 on challenger = p1.username
-            join player as p2 on challengee = p2.username
-            where (challenger = :username or challengee = :username)
-               and not (accepted isnull);");
-      $challengeAccepted->execute(array(":username"=>$_SESSION['user']->username));
-   }
-   catch (PDOException $e)
-   {
-      echo '
-         <script type="text/javascript">
-            <!--
-            alert("FATAL ERROR: Data failed to load.");
-            window.location.reload();
-            // -->
-         </script>';
-      $db->close();
-      die();
-   }
 ?>
 
 <!DOCTYPE html>
