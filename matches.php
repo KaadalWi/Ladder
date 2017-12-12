@@ -16,16 +16,15 @@
 
    try
    {
-      $games = $db->prepare("
-         select winner, loser, played, number, winner_score, loser_score,
+      $matches = $db->prepare("
+         select winner, loser, played, won, lost,
             p1.username as winner_username, p1.name as winner_name,
             p2.username as loser_username, p2.name as loser_name
-            from game
+            from match_view
             join player as p1 on winner = p1.username
             join player as p2 on loser = p2.username
-            where winner = :username or loser = :username;
-            order by played, number");
-      $games->execute(array(":username"=>$_SESSION["user"]->username));
+            order by played desc;");
+      $matches->execute();
    }
    catch (PDOException $e)
    {
@@ -76,11 +75,11 @@
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CHALLENGES</p>
          </a>
-         <a href="/games.php#games" class="w3-bar-item w3-button w3-padding-large w3-black">
+         <a href="/games.php#games" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
             <i class="fa fa-newspaper-o w3-xxlarge"></i>
             <p>GAMES</p>
          </a>
-         <a href="/matches.php#matches" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a href="matches.php#matches" class="w3-bar-item w3-button w3-padding-large w3-black">
             <i class="fa fa-table w3-xxlarge"></i>
             <p>MATCHES</p>
          </a>
@@ -99,8 +98,8 @@
          <div class="w3-bar w3-black w3-opacity w3-center w3-small">
             <a href="/ladder.php#ladder" class="w3-bar-item w3-button" style="width:16.5% !important">HOME</a>
             <a href="/challenges.php#challenges" class="w3-bar-item w3-button" style="width:15% !important">CHAL</a>
-            <a href="/games.php#games" class="w3-bar-item w3-button w3-grey" style="width:16% !important">GAME</a>
-            <a href="/matches.php#matches" class="w3-bar-item w3-button" style="width:18.5% !important">MATCH</a>
+            <a href="/games.php#games" class="w3-bar-item w3-button" style="width:16% !important">GAME</a>
+            <a href="/matches.php#matches" class="w3-bar-item w3-button w3-grey" style="width:18.5% !important">MATCH</a>
             <a href="/account.php#account" class="w3-bar-item w3-button" style="width:15% !important">ACCT</a>
             <a href="/logout.php" class="w3-bar-item w3-button" style="width:19% !important">LGOUT</a>
          </div>
@@ -115,22 +114,22 @@
             <img src="/icons/ladder_icon.jpg" class="w3-image" width="992" height="1108">
          </header>
 
-         <!-- Games -->
-         <div class="w3-content w3-center w3-text-grey w3-padding-64" id="games">
-            <h2 class="w3-text-light-grey">Games</h2>
+         <!-- Matches -->
+         <div class="w3-content w3-center w3-text-grey w3-padding-64" id="matches">
+            <h2 class="w3-text-light-grey">Matches</h2>
             <div class="w3-large w3-justified">
                <table class="w3-table-all w3-centered w3-hoverable">
                   <tr class="w3-black">
                      <th>Winner</th>
                      <th>Loser</th>
                      <th>Time</th>
-                     <th>Winner Score</th>
-                     <th>Loser Score</th>
+                     <th>Rounds Won</th>
+                     <th>Rounds Lost</th>
                   </tr>
                   <?php
                      $rowColours = array("w3-dark-grey", "w3-grey");
                      $row = 0;
-                     foreach($games->fetchAll(PDO::FETCH_ASSOC) as $resultRow)
+                     foreach($matches->fetchAll(PDO::FETCH_ASSOC) as $resultRow)
                      {
                         $rowColour = $rowColours[$row % 2];
                         echo "
@@ -142,15 +141,15 @@
                         echo '
                      <td>' . htmlspecialchars($resultRow['played']) . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . htmlspecialchars($resultRow['winner_score']) . '</td>' . PHP_EOL;
+                     <td>' . htmlspecialchars($resultRow['won']) . '</td>' . PHP_EOL;
                         echo '
-                     <td>' . htmlspecialchars($resultRow['loser_score']) . '</td>' . PHP_EOL;
+                     <td>' . htmlspecialchars($resultRow['lost']) . '</td>' . PHP_EOL;
                         echo '
                   </tr>' . PHP_EOL;
                         $row++;
                      }
 
-                     $games->closeCursor();
+                     $matches->closeCursor();
                   ?>
                </table>
             </div>

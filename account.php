@@ -52,11 +52,11 @@
             <i class="fa fa-envelope w3-xxlarge"></i>
             <p>CHALLENGES</p>
          </a>
-         <a href="/games.php" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a href="/games.php#games" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
             <i class="fa fa-newspaper-o w3-xxlarge"></i>
             <p>GAMES</p>
          </a>
-         <a class="w3-bar-item w3-button w3-padding-large w3-hover-black">
+         <a href="/matches.php#matches" class="w3-bar-item w3-button w3-padding-large w3-hover-black">
             <i class="fa fa-table w3-xxlarge"></i>
             <p>MATCHES</p>
          </a>
@@ -75,8 +75,8 @@
          <div class="w3-bar w3-black w3-opacity w3-center w3-small">
             <a href="/ladder.php#ladder" class="w3-bar-item w3-button" style="width:16.5% !important">HOME</a>
             <a href="/challenges.php#challenges" class="w3-bar-item w3-button" style="width:15% !important">CHAL</a>
-            <a href="/games.php" class="w3-bar-item w3-button" style="width:16% !important">GAME</a>
-            <a class="w3-bar-item w3-button" style="width:18.5% !important">MATCH</a>
+            <a href="/games.php#games" class="w3-bar-item w3-button" style="width:16% !important">GAME</a>
+            <a href="/matches.php#matches" class="w3-bar-item w3-button" style="width:18.5% !important">MATCH</a>
             <a href="/account.php#account" class="w3-bar-item w3-button w3-grey" style="width:15% !important">ACCT</a>
             <a href="/logout.php" class="w3-bar-item w3-button" style="width:19% !important">LGOUT</a>
          </div>
