@@ -21,7 +21,6 @@
       </style>
       <script type="text/javascript" src="/start/popups.js"></script>
       <script type="text/javascript" src="/register/validation.js"></script>
-      <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
    </head>
    <body class="w3-black">
 
@@ -189,7 +188,7 @@
                   <p>
                      <input class="w3-input w3-padding-16 w3-round-large" type="tel"
                         name="phone" id="phone" placeholder="  Phone Number (e.g. XXX-XXX-XXXX)"
-                        pattern="^(\+?1)?[ ]?\(?\d{3}\)?[-. ]?\d{3}[-. ]?\d{4}$"
+                        pattern="^\d{10}$"
                         oninput="validateElement(this);" />
                   </p>
                   <p>
