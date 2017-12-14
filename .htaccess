@@ -1,35 +1,5 @@
 RedirectMatch 404 /\.git
 
 RewriteEngine On
-RewriteCond %{REQUEST_URI} ^/$
 RewriteCond %{HTTPS} off
 RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} /account.*
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} /Secure/.*
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} /start/.*
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} /register/.*
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} /icons/.*
-RewriteCond %{HTTPS} off
-RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [R=301]
-
-RewriteCond %{REQUEST_URI} !^/$
-RewriteCond %{REQUEST_URI} !/account.*
-RewriteCond %{REQUEST_URI} !/Secure/.*
-RewriteCond %{REQUEST_URI} !/start/.*
-RewriteCond %{REQUEST_URI} !/register/.*
-RewriteCond %{REQUEST_URI} !/icons/.*
-RewriteCond %{HTTPS} on
-RewriteRule (.*) http://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
