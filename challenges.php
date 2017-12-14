@@ -73,6 +73,8 @@
          @media only screen and (max-width: 600px) {#main {margin-left: 0}}
       </style>
       <script type="text/javascript" src="/challenge/respondToChallenge.js"></script>
+      <script type="text/javascript" src="/challenge/reportValidation.js"></script>
+      <script type="text/javascript" src="/start/popups.js"></script>
    </head>
    <body class="w3-black">
 
@@ -162,7 +164,14 @@
                      <td>" . htmlspecialchars($challenges['challengee_name']) . "</td>
                      <td>" . htmlspecialchars($challenges['scheduled']) . "</td>
                   </tr>
-               </table>" . PHP_EOL;
+               </table>
+               <br />
+               <a class='w3-bar-item w3-button w3-padding-large w3-hover-black'
+                  onclick='openPopup(\"report_popup\")'>
+                  <button class='w3-button w3-light-grey w3-padding-large w3-section'>
+                     <i class='fa fa-book'></i> REPORT SCORES
+                  </button>
+               </a>";
                   }
                   else
                   {
@@ -307,6 +316,102 @@
             </div>
          </div>
 
+         <!-- Report Scores -->
+         <div id="report_popup" class="w3-modal">
+            <div class="w3-modal-content w3-card-4 w3-animate-zoom w3-dark-grey" style="max-width:600px">
+               <div class="w3-center"><br />
+                  <span onclick="closePopup('report_popup', true);"
+                     class="w3-button w3-xlarge w3-hover-black w3-display-topright" title="Close">
+                     &times;
+                  </span>
+               </div>
+               <form class="w3-container" id="report" name="report"
+                  action="/reportScores.php" method="post">
+                  <input type="text" style="display: none;" id="challenger_username" name="p1"
+                     value=<?php echo '"' . htmlspecialchars($challenges["challenger"]) . '"' ?> />
+                  <input type="text" style="display: none;" id="challengee_username" name="p2"
+                     value=<?php echo '"' . htmlspecialchars($challenges["challengee"]) . '"' ?> />
+                  <input type="text" style="display: none;" id="scheduled" name="scheduled"
+                     value=<?php echo '"' . htmlspecialchars($challenges["scheduled"]) . '"' ?> />
+                  <h3 class="w3-xlarge w3-center w3-text-light-grey">Report Scores</h3>
+                  <table class="w3-table w3-centered">
+                     <tr>
+                        <th>Game</th>
+                        <th><?php echo htmlspecialchars($challenges["challenger_name"]); ?>'s Score</th>
+                        <th><?php echo htmlspecialchars($challenges["challengee_name"]); ?>'s Score</th>
+                     </tr>
+                     <tr id="game_1">
+                        <td class="w3-large">1</td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p1_score_1" id="p1_score_1" required />
+                        </td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p2_score_1" id="p2_score_1" required />
+                        </td>
+                     </tr>
+                     <tr id="game_2">
+                        <td class="w3-large">2</td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p1_score_2" id="p1_score_2" required />
+                        </td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p2_score_2" id="p2_score_2" required />
+                        </td>
+                     </tr>
+                     <tr id="game_3">
+                        <td class="w3-large">3</td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p1_score_3" id="p1_score_3" required />
+                        </td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p2_score_3" id="p2_score_3" required />
+                        </td>
+                     </tr>
+                     <tr id="game_4" style="display: none;">
+                        <td class="w3-large">4</td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p1_score_4" id="p1_score_4" />
+                        </td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p2_score_4" id="p2_score_4" />
+                        </td>
+                     </tr>
+                     <tr id="game_5" style="display: none;">
+                        <td class="w3-large">5</td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p1_score_5" id="p1_score_5" />
+                        </td>
+                        <td>
+                           <input class="w3-input w3-round-large" type="text"
+                              name="p2_score_5" id="p2_score_5" />
+                        </td>
+                     </tr>
+                  </table>
+                  <p class="w3-large">
+                     <button class="w3-button w3-block w3-grey w3-hover-black w3-padding-large" type="submit"
+                        onclick="validateSubmission('report');">
+                        <i class="fa fa-book"></i> REPORT
+                     </button>
+                  </p>
+               </form>
+               <div class="w3-container w3-border-top w3-padding-16 w3-light-grey">
+                  <button onclick="closePopup('report_popup', true);" type="button"
+                     class="w3-button w3-dark-grey w3-hover-black">
+                     Cancel
+                  </button>
+               </div>
+            </div>
+         </div>
+
          <!-- About -->
          <div class="w3-content w3-center w3-text-grey w3-padding-64" id="about">
             <h2 class="w3-text-light-grey">About</h2>
@@ -340,5 +445,11 @@
       <!-- END PAGE CONTENT -->
       </div>
 
+      <script type="text/javascript">
+         <!--
+         // Setup password validation for account update and delete
+         scoreValidation();
+         // -->
+      </script>
    </body>
 </html>

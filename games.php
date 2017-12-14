@@ -23,8 +23,8 @@
             from game
             join player as p1 on winner = p1.username
             join player as p2 on loser = p2.username
-            where winner = :username or loser = :username;
-            order by played, number");
+            where winner = :username or loser = :username
+            order by played, number;");
       $games->execute(array(":username"=>$_SESSION["user"]->username));
    }
    catch (PDOException $e)
